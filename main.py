@@ -52,6 +52,20 @@ class AdvancedComputerCourse(ComputerCourse):
     def showPrerequisites(self):
         print(f"Prerequisites for {self.name}: {self.prerequisites}")
 
+class Exam(ComputerCourse, CourseMaterial):
+    def __init__(self, idCourse, name, durationInHours, skillRequires, description, idTeacher, title, type_of_material):
+        ComputerCourse.__init__(self, idCourse, name, durationInHours, skillRequires, description, idTeacher)
+        CourseMaterial.__init__(self, title, type_of_material)
+
+    def showExamDetails(self):
+        print(f"Exam Details: {self.title} for the course {self.name}")
+
+    @staticmethod
+    def attempt(minScore, studentScore):
+        if studentScore > minScore:
+            return True
+        else:
+            return False
 
 # main()
 course1 = ComputerCourse(1, "Computer Science", 10, 0, "Good for beginners", 0)
@@ -78,3 +92,8 @@ material1 = CourseMaterial("Intro to Programming", "Video")
 material2 = CourseMaterial("Data Structures", "Book")
 material1.display_info()
 material2.display_info()
+
+exam1 = Exam(3, "testExam", 1, 2, "test your skills before course", 0, "Base Exam", "Test")
+if exam1.attempt(5, 10):
+    print("😄")
+exam1.showExamDetails()
