@@ -53,16 +53,16 @@ class AdvancedComputerCourse(ComputerCourse):
         print(f"Prerequisites for {self.name}: {self.prerequisites}")
 
 class Exam(ComputerCourse, CourseMaterial):
-    def __init__(self, idCourse, name, durationInHours, skillRequires, description, idTeacher, title, type_of_material):
+    def __init__(self, idCourse, name, durationInHours, skillRequires, description, idTeacher, title, type_of_material, minScore):
+        self.minScore = minScore
         ComputerCourse.__init__(self, idCourse, name, durationInHours, skillRequires, description, idTeacher)
         CourseMaterial.__init__(self, title, type_of_material)
 
     def showExamDetails(self):
         print(f"Exam Details: {self.title} for the course {self.name}")
 
-    @staticmethod
-    def attempt(minScore, studentScore):
-        if studentScore > minScore:
+    def attempt(self, studentScore):
+        if studentScore > self.minScore:
             return True
         else:
             return False
@@ -93,7 +93,7 @@ material2 = CourseMaterial("Data Structures", "Book")
 material1.display_info()
 material2.display_info()
 
-exam1 = Exam(3, "testExam", 1, 2, "test your skills before course", 0, "Base Exam", "Test")
-if exam1.attempt(5, 10):
+exam1 = Exam(3, "testExam", 1, 2, "test your skills before course", 0, "Base Exam", "Test", minScore=5)
+if exam1.attempt(10):
     print("😄")
 exam1.showExamDetails()
